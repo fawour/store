@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<script>
+    const postData = (v, i) =>{
+    alert("Товар "+v+" добавлен в корзину");
+    $.ajax({
+            type: 'POST',
+            url: 'http://127.0.0.1:8000/api/v1/card_add/'+i,
+            });
+    }
+
+
+</script>
+{% endblock %}
+{% block content %}
+
+    {% for operation in operations %}
+        <ul class="products clearfix">
+	        <li class="product-wrapper">
+		        <a href="" class="product">{{operation.name}}
+                    <div class="product-photo">
+                        <img src="{{ url_for('static', path=operation.img) }}">
+                    </div>
+                </a>
+                Цена: {{operation.price}}
+                <button onclick="postData(v='{{operation.name}}', i= {{operation.id}})" class="border-2 rounded-3xl bg-gray-300 p-3">В корзину</button>
+	        </li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', path='css/index.css')}}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    const deleteData = () => {
+    alert("Корзина очищена");
+    $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/api/v1/card_delete',
+            });
+    window.location.href = 'http://127.0.0.1:8000/api/v1/products';
+    }
+    const buyData = () => {
+    alert("Покупка совершена");
+    $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/api/v1/card_delete',
+            });
+    window.location.href = 'http://127.0.0.1:8000/api/v1/products';
+    }
+</script>
+
+    <title>Корзина</title>
+
+</head>
+<body>
+{% block content %}
+
+    {% for operation in operations %}
+        <ul class="products clearfix">
+	        <li class="product-wrapper">
+		        <a href="" class="product">
+                    <div class="product-photo">
+                        {{operation.name}}
+                        <img src="{{ url_for('static', path=operation.img) }}">
+                    </div>
+                    Шт:{{operation.quantity }}  Цена:{{operation.price}}
+                </a>
+	        </li>
+        </ul>
+
+    {% endfor %}
+            <button onclick="buyData()" class="border-2 rounded-3xl bg-gray-300 p-3">Купить</button>
+            <button onclick="deleteData()" class="border-2 rounded-3xl bg-gray-300 p-3">Очистить корзину</button>
+{% endblock %}
+</body>
+</html>
